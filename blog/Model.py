@@ -1,5 +1,6 @@
 from blog import Base
 from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, func, Integer, String
+from sqlalchemy.orm import relationship
 
 TEXT = 655535
 LONGTEXT = 4294967295
@@ -28,7 +29,8 @@ class Author(Base):
     url = Column('url', String(1024))
     created = Column('created', DateTime, default=func.now())
     activation_key = Column('activation_key', String(2048))
-    status = Column('status_id', Integer, ForeignKey('AuthorStatus.id'))
+    status_id = Column('status_id', Integer, ForeignKey('author_status.id'))
+    status = relationship('AuthorStatus')
     display_name = Column('display_name', String(64))
 
     def __repr__(self):
@@ -68,16 +70,20 @@ class Comment(Base):
     __tablename__ = 'comment'
 
     id = Column('id', Integer, primary_key=True)
-    parent = Column('parent_id', Integer, ForeignKey('Comment.id'))
-    post = Column('post_id', Integer, ForeignKey('Post.id'))
+    parent_id = Column('parent_id', Integer, ForeignKey('comment.id'))
+    parent = relationship('Comment')
+    post_id = Column('post_id', Integer, ForeignKey('post.id'))
+    post = relationship('Post')
     author_name = Column('author', String(255))
     author_email = Column('author_email', String(255))
     author_url = Column('author_url', String(255))
     author_IP = Column('author_IP', String(39))
-    author = Column('author_id', Integer, ForeignKey('Author.id'))
+    author_id = Column('author_id', Integer, ForeignKey('author.id'))
+    author = relationship('Author')
     date = Column('date', DateTime, default=func.now())
     content = Column('content', String(TEXT))
-    approval = Column('approval_id', Integer, ForeignKey('Approval.id'))
+    approval_id = Column('approval_id', Integer, ForeignKey('approval.id'))
+    approval = relationship('Approval')
     agent = Column('agent', String(255))
     type = Column('type', String(20))
 
@@ -106,8 +112,10 @@ class Post(Base):
     __tablename__ = 'post'
 
     id = Column('id', Integer, primary_key=True)
-    parent = Column('parent_id', Integer, ForeignKey("Post.id"))
-    author = Column('author_id', Integer, ForeignKey("Author.id"))
+    parent_id = Column('parent_id', Integer, ForeignKey("post.id"))
+    parent = relationship('Post')
+    author_id = Column('author_id', Integer, ForeignKey('author.id'))
+    author = relationship('Author')
     date = Column('date', DateTime, default=func.now())
     modified = Column('modified', DateTime)
     title = Column('title', String(TEXT))
@@ -115,17 +123,23 @@ class Post(Base):
     trackback_excerpt = Column('trackback_excerpt', String(TEXT))
     content = Column('content', String(LONGTEXT))
     content_filtered = Column('content_filtered', String(LONGTEXT))
-    category = Column('category_id', Integer, ForeignKey('Category.id'))
-    post_status = Column('post_status_id', Integer, ForeignKey('PostStatus.id'))
-    approval = Column('approval_id', Integer, ForeignKey('Approval.id'))
+    category_id = Column('category_id', Integer, ForeignKey('category.id'))
+    category = relationship('Category')
+    post_status_id = Column('post_status_id', Integer, ForeignKey('post_status.id'))
+    post_status = relationship('PostStatus')
+    approval_id = Column('approval_id', Integer, ForeignKey('approval.id'))
+    approval = relationship('Approval')
     password = Column('password', String(128))
-    post_type = Column('post_type_id', Integer, ForeignKey('PostType.id'))
+    post_type_id = Column('post_type_id', Integer, ForeignKey('post_type.id'))
+    post_type = relationship('PostType')
     mime_type = Column('mime_type', String)
     latitude = Column('latitude', Float)
     longitude = Column('longitude', Float)
-    trackback_status = Column('trackback_status_id', Integer, ForeignKey('TrackbackStatus.id'))
+    trackback_status_id = Column('trackback_status_id', Integer, ForeignKey('trackback_status.id'))
+    trackback_status = relationship('TrackbackStatus')
     name = Column('name', String)
-    comment_status = Column('comment_status_id', Integer, ForeignKey('CommentStatus.id'))
+    comment_status_id = Column('comment_status_id', Integer, ForeignKey('comment_status.id'))
+    comment_status = relationship('CommentStatus')
     comment_count = Column('comment_count', Integer)
 
     def __repr__(self):
