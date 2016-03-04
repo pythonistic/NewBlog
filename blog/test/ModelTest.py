@@ -49,6 +49,22 @@ class ModelTest(unittest.TestCase):
         self.session.commit()
         return status
 
+    def create_author(self, new_id, status):
+        self.clean(Author, new_id)
+
+        author = Author()
+        author.id = new_id
+        author.login = 'foo'
+        author.password = 'bar'
+        author.email = 'baz'
+        author.url = 'frobble'
+        author.activation_key = 'activation'
+        author.status = status
+        author.display_name = 'name'
+        self.session.add(author)
+        self.session.commit()
+        return author
+
     def test_approval(self):
         approval = self.create_approval(self.ID)
         loaded_approval = self.session.query(Approval).filter(Approval.id == self.ID).first()
@@ -64,20 +80,7 @@ class ModelTest(unittest.TestCase):
 
     def test_author(self):
         status = self.create_author_status(self.ID)
-
-        self.clean(Author, self.ID)
-
-        author = Author()
-        author.id = self.ID
-        author.login = 'foo'
-        author.password = 'bar'
-        author.email = 'baz'
-        author.url = 'frobble'
-        author.activation_key = 'activation'
-        author.status = status
-        author.display_name = 'name'
-        self.session.add(author)
-        self.session.commit()
+        author = self.create_author(self.ID, status)
 
         loaded_author = self.session.query(Author).filter(Author.id == self.ID).first()
         self.assertEqual(author.id, loaded_author.id)
@@ -87,6 +90,7 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(author.url, loaded_author.url)
         self.assertEqual(author.activation_key, loaded_author.activation_key)
         self.assertEqual(author.status, loaded_author.status)
+        self.assertEqual(status, loaded_author.status)
         self.assertEqual(author.display_name, loaded_author.display_name)
         self.assertEqual(author.created, loaded_author.created)
         self.assertEqual(str(author), str(loaded_author))

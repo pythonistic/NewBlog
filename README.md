@@ -42,7 +42,7 @@ I typically write and install software to a _virtualenv_.  Python 3.3+ users can
 Activate the virtualenv to install the Python packages using pip.
 
     source Blog/activate
-    pip install Flask SQLAlchemy Flask-SQLAlchemy MySQL-python
+    pip install Flask SQLAlchemy Flask-SQLAlchemy MySQL-python coverage
 
 Environment Variables
 ---------------------
