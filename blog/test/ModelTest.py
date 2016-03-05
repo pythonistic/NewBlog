@@ -65,6 +65,18 @@ class ModelTest(unittest.TestCase):
         self.session.commit()
         return author
 
+    def create_category(self, new_id):
+        self.clean(Category, new_id)
+
+        category = Category()
+        category.id = new_id
+        category.name = 'foo'
+        category.description = 'description'
+        category.visible = True
+        self.session.add(category)
+        self.session.commit()
+        return category
+
     def test_approval(self):
         approval = self.create_approval(self.ID)
         loaded_approval = self.session.query(Approval).filter(Approval.id == self.ID).first()
@@ -108,3 +120,15 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(str(status), str(loaded_status))
 
         self.clean(AuthorStatus, self.ID)
+
+    def test_category(self):
+        category = self.create_category(self.ID)
+
+        loaded_category = self.session.query(Category).filter(Category.id == self.ID).first()
+        self.assertEqual(category.id, loaded_category.id)
+        self.assertEqual(category.name, loaded_category.name)
+        self.assertEqual(category.description, loaded_category.description)
+        self.assertEqual(category.visible, loaded_category.visible)
+
+        self.clean(Category, self.ID)
+
