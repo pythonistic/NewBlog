@@ -261,3 +261,36 @@ class ModelTest(unittest.TestCase):
         self.clean(Author, self.ID)
         self.clean(AuthorStatus, self.ID)
 
+    def test_comment_status(self):
+        comment_status = self.create_comment_status(self.ID)
+
+        loaded_comment_status = self.session.query(CommentStatus).filter(CommentStatus.id == self.ID).first()
+        self.assertIsNotNone(loaded_comment_status)
+        self.assertEqual(str(loaded_comment_status), str(comment_status))
+        self.clean(CommentStatus, self.ID)
+
+    def test_post(self):
+        author_status = self.create_author_status(self.ID)
+        author = self.create_author(self.ID, author_status)
+        approval = self.create_approval(self.ID)
+        category = self.create_category(self.ID)
+        post_status = self.create_post_status(self.ID)
+        post_type = self.create_post_type(self.ID)
+        trackback_status = self.create_trackback_status(self.ID)
+        comment_status = self.create_comment_status(self.ID)
+        post = self.create_post(self.ID, author, category, post_status, approval,
+                                post_type, trackback_status, comment_status)
+
+        loaded_post = self.session.query(Post).filter(Post.id == self.ID).first()
+        self.assertIsNotNone(loaded_post)
+        self.assertEqual(str(loaded_post), str(post))
+
+        self.clean(Post, self.ID)
+        self.clean(CommentStatus, self.ID)
+        self.clean(TrackbackStatus, self.ID)
+        self.clean(PostType, self.ID)
+        self.clean(PostStatus, self.ID)
+        self.clean(Category, self.ID)
+        self.clean(Approval, self.ID)
+        self.clean(Author, self.ID)
+        self.clean(AuthorStatus, self.ID)
