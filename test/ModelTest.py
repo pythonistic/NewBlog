@@ -18,8 +18,8 @@ class ModelTest(unittest.TestCase):
         """
         Remove the test record for the model class.
 
-        clz:        The test record class.
-        remove_id:  The id of the record to remove.
+        :param clz:        The test record class.
+        :param remove_id:  The id of the record to remove.
         """
         results = self.session.query(clz).filter(clz.id == remove_id).all()
         for result in results:

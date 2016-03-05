@@ -121,6 +121,7 @@ class Post(Base):
     trackback_excerpt = Column('trackback_excerpt', String(TEXT))
     content = Column('content', String(LONGTEXT))
     content_filtered = Column('content_filtered', String(LONGTEXT))
+    # TODO consider multiple categories per post
     category_id = Column('category_id', Integer, ForeignKey('category.id'))
     category = relationship('Category', foreign_keys='Post.category_id')
     post_status_id = Column('post_status_id', Integer, ForeignKey('post_status.id'))
