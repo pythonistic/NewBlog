@@ -294,3 +294,30 @@ class ModelTest(unittest.TestCase):
         self.clean(Approval, self.ID)
         self.clean(Author, self.ID)
         self.clean(AuthorStatus, self.ID)
+
+    def test_post_status(self):
+        post_status = self.create_post_status(self.ID)
+
+        loaded_post_status = self.session.query(PostStatus).filter(PostStatus.id == self.ID).first()
+        self.assertIsNotNone(loaded_post_status)
+        self.assertEqual(str(loaded_post_status), str(post_status))
+
+        self.clean(PostStatus, self.ID)
+
+    def test_post_type(self):
+        post_type = self.create_post_type(self.ID)
+
+        loaded_post_type = self.session.query(PostType).filter(PostType.id == self.ID).first()
+        self.assertIsNotNone(loaded_post_type)
+        self.assertEqual(str(post_type), str(loaded_post_type))
+
+        self.clean(PostType, self.ID)
+
+    def test_trackback_status(self):
+        trackback_status = self.create_trackback_status(self.ID)
+
+        loaded_trackback_status =self.session.query(TrackbackStatus).filter(TrackbackStatus.id == self.ID).first()
+        self.assertIsNotNone(loaded_trackback_status)
+        self.assertEqual(str(trackback_status), str(loaded_trackback_status))
+
+        self.clean(TrackbackStatus, self.ID)
