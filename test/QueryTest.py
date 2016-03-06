@@ -2,12 +2,14 @@ import unittest
 
 from blog import Session
 from blog.Model import *
+from blog.Query import *
 
 
 class QueryTest(unittest.TestCase):
 
     def setUp(self):
         self.session = Session()
+        self.queries = Query(self.session)
 
     def tearDown(self):
         self.session.close()
@@ -30,6 +32,7 @@ class QueryTest(unittest.TestCase):
         Normal blog display
         :return:
         """
+
 
     def test_load_post_synposis(self):
         """
