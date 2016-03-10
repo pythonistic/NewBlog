@@ -206,3 +206,4 @@ INSERT INTO `author_status` (id, status, description) VALUES (1, 'active', 'Acti
 INSERT INTO `author_status` (id, status, description) VALUES (2, 'pending', 'Pending confirmation');
 INSERT INTO `author_status` (id, status, description) VALUES (3, 'deactivated', 'Deactivated');
 
+COMMIT

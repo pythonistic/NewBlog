@@ -1,7 +1,6 @@
 import unittest
 
-from blog import Session
-from blog.Model import *
+from blog import Session, db_engine
 from blog.Query import *
 
 
@@ -13,6 +12,25 @@ class QueryTest(unittest.TestCase):
 
     def tearDown(self):
         self.session.close()
+
+    def execute_sql_file(self, file):
+        buffer = ''
+        f = open(file, 'r')
+        for line in f:
+            buffer += line
+        f.close()
+
+        statements = buffer.split(';')
+        for statement in statements:
+            line = statement.strip()
+            if line:
+                db_engine.execute(line)
+
+    def setUpClass(self):
+        self.execute_sql_file('db/test_dml.sql')
+
+    def tearDownClass(self):
+        self.execute_sql_file('db/clean_test_dml.sql')
 
     # TODO refactor this to a common location - duplicate code from ModelTest
     def clean(self, clz, remove_id):
@@ -32,7 +50,13 @@ class QueryTest(unittest.TestCase):
         Normal blog display
         :return:
         """
+        #self.queries.load_post_with_comments_by_id(-100)
 
+    def test_load_post_with_comments_by_permalink(self):
+        """
+        Blog display from a permalink
+        :return:
+        """
 
     def test_load_post_synposis(self):
         """
