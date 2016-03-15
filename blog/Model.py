@@ -136,16 +136,16 @@ class Post(Base):
     longitude = Column('longitude', Float)
     trackback_status_id = Column('trackback_status_id', Integer, ForeignKey('trackback_status.id'))
     trackback_status = relationship('TrackbackStatus', foreign_keys='Post.trackback_status_id')
-    name = Column('name', String, default='')
+    permalink = Column('permalink', String)
     comment_status_id = Column('comment_status_id', Integer, ForeignKey('comment_status.id'))
     comment_status = relationship('CommentStatus', foreign_keys='Post.comment_status_id')
     comment_count = Column('comment_count', Integer, default=0)
 
     def __repr__(self):
         return "<Post(id=%s,author_id=%s,date=%s,modified=%s,title=%s,len(content)=%s,category=%s," \
-               "approval=%s)>" % (
+               "approval=%s,permalink=%s)>" % (
             self.id, self.author.id, self.date, self.modified, self.title, len(self.content),
-            self.category, self.approval
+            self.category, self.approval, self.permalink
         )
 
 

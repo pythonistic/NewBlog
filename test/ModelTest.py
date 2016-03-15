@@ -95,7 +95,7 @@ class ModelTest(unittest.TestCase):
         post.post_type = post_type
         post.mime_type = 'text/plain'
         post.trackback_status = trackback_status
-        post.name = 'foo'
+        post.permalink = 'http://foo'
         post.comment_status = comment_status
         post.comment_count = 2
         self.session.add(post)

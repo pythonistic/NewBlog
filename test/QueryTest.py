@@ -13,7 +13,8 @@ class QueryTest(unittest.TestCase):
     def tearDown(self):
         self.session.close()
 
-    def execute_sql_file(self, file):
+    @staticmethod
+    def execute_sql_file(file):
         buffer = ''
         f = open(file, 'r')
         for line in f:
@@ -26,11 +27,13 @@ class QueryTest(unittest.TestCase):
             if line:
                 db_engine.execute(line)
 
-    def setUpClass(self):
-        self.execute_sql_file('db/test_dml.sql')
+    @staticmethod
+    def setUpClass():
+        QueryTest.execute_sql_file('../db/test_dml.sql')
 
-    def tearDownClass(self):
-        self.execute_sql_file('db/clean_test_dml.sql')
+    @staticmethod
+    def tearDownClass():
+        QueryTest.execute_sql_file('../db/clean_test_dml.sql')
 
     # TODO refactor this to a common location - duplicate code from ModelTest
     def clean(self, clz, remove_id):
@@ -50,13 +53,40 @@ class QueryTest(unittest.TestCase):
         Normal blog display
         :return:
         """
-        #self.queries.load_post_with_comments_by_id(-100)
+        post = self.queries.load_post_with_comments_by_id(-101)
+        self.assertIsNotNone(post)
+        self.assertEqual(post.title, 'Test Post')
+        self.assertEqual(post.comment_count, 3)
+        self.assertEqual(post.comment_count, len(post.comments))
+        self.assertEqual(post, post.comments[0].post)
+
+    def test_load_post_with_comments_failed(self):
+        """
+        Failed blog display
+        :return:
+        """
+        post = self.queries.load_post_with_comments_by_id(-99)
+        self.assertIsNone(post)
 
     def test_load_post_with_comments_by_permalink(self):
         """
         Blog display from a permalink
         :return:
         """
+        post = self.queries.load_post_with_comments_by_permalink('http://post1')
+        self.assertIsNotNone(post)
+        self.assertEqual(post.title, 'Test Post')
+        self.assertEqual(post.comment_count, 3)
+        self.assertEqual(post.comment_count, len(post.comments))
+        self.assertEqual(post, post.comments[0].post)
+
+    def test_load_post_with_comments_by_permalink_failed(self):
+        """
+        Failed blog display.
+        :return:
+        """
+        post = self.queries.load_post_with_comments_by_permalink('http://post0')
+        self.assertIsNone(post)
 
     def test_load_post_synposis(self):
         """
