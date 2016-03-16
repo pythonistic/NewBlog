@@ -93,6 +93,17 @@ class QueryTest(unittest.TestCase):
         Load the post for synopsis display (summary, feed, or main page)
         :return:
         """
+        post_synopsis = self.queries.load_post_synopsis_by_id('-101')
+        self.assertIsNotNone(post_synopsis)
+        self.assertEqual(post_synopsis.title, 'Test Post')
+
+    def test_load_post_synposis_failed(self):
+        """
+        Load the post for synopsis display (summary, feed, or main page)
+        :return:
+        """
+        post_synopsis = self.queries.load_post_synopsis_by_id('-99')
+        self.assertIsNone(post_synopsis)
 
     def test_load_post_without_comments(self):
         """

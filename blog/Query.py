@@ -1,4 +1,4 @@
-from blog.Model import Post, Comment
+from blog.Model import Post, PostSynopsis, Comment
 
 
 class Query(object):
@@ -36,3 +36,15 @@ class Query(object):
             post.comments = comments
         return post
 
+    def load_post_synopsis_by_id(self, id):
+        """
+        Load a single post synopsis by ID.
+
+        :param id: the post ID.
+        :return: the PostSynopsis, or None if not found.
+        """
+        post_synopsis = None
+        posts = self.session.query(PostSynopsis).filter(PostSynopsis.id == id).all()
+        if len(posts) > 0:
+            post_synopsis = posts[0]
+        return post_synopsis

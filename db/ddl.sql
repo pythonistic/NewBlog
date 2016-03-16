@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS post_synopsis;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS author;
@@ -176,6 +177,23 @@ CREATE TABLE IF NOT EXISTS `comment` (
   DEFAULT CHARSET = utf8
   AUTO_INCREMENT = 13;
 
+
+CREATE VIEW post_synopsis AS
+  SELECT
+    `id`,
+    `author_id`,
+    `date`,
+    `modified`,
+    `title`,
+    `excerpt`,
+    `trackback_excerpt`,
+    `category_id`,
+    `post_status_id`,
+    `approval_id`,
+    `post_type_id`,
+    `trackback_status_id`,
+    `permalink`
+  FROM post;
 
 INSERT INTO `trackback_status` (id, status, description) VALUES (1, 'open', 'Accepts trackback pings');
 INSERT INTO `trackback_status` (id, status, description) VALUES (2, 'closed', 'Ignores trackback pings');

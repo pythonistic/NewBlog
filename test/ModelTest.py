@@ -321,3 +321,29 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(str(trackback_status), str(loaded_trackback_status))
 
         self.clean(TrackbackStatus, self.ID)
+
+    def test_post_synopsis(self):
+        author_status = self.create_author_status(self.ID)
+        author = self.create_author(self.ID, author_status)
+        approval = self.create_approval(self.ID)
+        category = self.create_category(self.ID)
+        post_status = self.create_post_status(self.ID)
+        post_type = self.create_post_type(self.ID)
+        trackback_status = self.create_trackback_status(self.ID)
+        comment_status = self.create_comment_status(self.ID)
+        post = self.create_post(self.ID, author, category, post_status, approval,
+                                post_type, trackback_status, comment_status)
+
+        loaded_post_synopsis = self.session.query(PostSynopsis).filter(PostSynopsis.id == self.ID).first()
+        self.assertIsNotNone(loaded_post_synopsis)
+        self.assertEqual(loaded_post_synopsis.id, post.id)
+
+        self.clean(Post, self.ID)
+        self.clean(CommentStatus, self.ID)
+        self.clean(TrackbackStatus, self.ID)
+        self.clean(PostType, self.ID)
+        self.clean(PostStatus, self.ID)
+        self.clean(Category, self.ID)
+        self.clean(Approval, self.ID)
+        self.clean(Author, self.ID)
+        self.clean(AuthorStatus, self.ID)

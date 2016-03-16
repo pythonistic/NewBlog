@@ -186,3 +186,35 @@ class TrackbackStatus(Base):
             self.id, self.status, self.description
         )
 
+
+# special types
+class PostSynopsis(Base):
+    __tablename__ = 'post_synopsis'
+
+    id = Column('id', Integer, primary_key=True)
+    author_id = Column('author_id', Integer, ForeignKey('author.id'))
+    author = relationship('Author', foreign_keys='PostSynopsis.author_id')
+    date = Column('date', DateTime, default=func.now())
+    modified = Column('modified', DateTime, default=func.now())
+    title = Column('title', String(TEXT))
+    excerpt = Column('excerpt', String(TEXT))
+    trackback_excerpt = Column('trackback_excerpt', String(TEXT))
+    # TODO consider multiple categories per post
+    category_id = Column('category_id', Integer, ForeignKey('category.id'))
+    category = relationship('Category', foreign_keys='PostSynopsis.category_id')
+    post_status_id = Column('post_status_id', Integer, ForeignKey('post_status.id'))
+    post_status = relationship('PostStatus', foreign_keys='PostSynopsis.post_status_id')
+    approval_id = Column('approval_id', Integer, ForeignKey('approval.id'))
+    approval = relationship('Approval', foreign_keys='PostSynopsis.approval_id')
+    post_type_id = Column('post_type_id', Integer, ForeignKey('post_type.id'))
+    post_type = relationship('PostType', foreign_keys='PostSynopsis.post_type_id')
+    trackback_status_id = Column('trackback_status_id', Integer, ForeignKey('trackback_status.id'))
+    trackback_status = relationship('TrackbackStatus', foreign_keys='PostSynopsis.trackback_status_id')
+    permalink = Column('permalink', String)
+
+    def __repr__(self):
+        return "<PostSynopsis(id=%s,author_id=%s,date=%s,modified=%s,title=%s,category=%s," \
+               "approval=%s,permalink=%s)>" % (
+                   self.id, self.author.id, self.date, self.modified, self.title,
+                   self.category, self.approval, self.permalink
+               )
