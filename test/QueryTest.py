@@ -110,18 +110,47 @@ class QueryTest(unittest.TestCase):
         Load the post for editing.
         :return:
         """
+        post = self.queries.load_post_by_id('-101')
+        self.assertIsNotNone(post)
+        self.assertEqual(post.title, 'Test Post')
+        self.assertEqual(post.comment_count, 3)
+        self.assertEqual(0, len(post.comments))
 
     def test_load_comments(self):
         """
         Load the comments for a separate comment feed
         :return:
         """
+        comments = self.queries.load_comments_by_post_id('-101')
+        self.assertIsNotNone(comments)
+        self.assertTrue(comments)
+        self.assertEqual(3, len(comments))
+
+    def test_load_comments_failed(self):
+        """
+        Load the comments for a separate comment feed
+        :return:
+        """
+        comments = self.queries.load_comments_by_post_id('-99')
+        self.assertIsNotNone(comments)
+        self.assertFalse(comments)
 
     def test_get_post_id_for_permalink(self):
         """
         Get the post ID for a given permalink, used for direct linking to the post.
         :return:
         """
+        post_id = self.queries.get_post_id_for_permalink('http://post1')
+        self.assertIsNotNone(post_id)
+        self.assertEqual(-101, post_id)
+
+    def test_get_post_id_for_permalink_failed(self):
+        """
+        Get the None post ID for a permalink that doesn't exist.
+        :return:
+        """
+        post_id = self.queries.get_post_id_for_permalink('http://post0')
+        self.assertIsNone(post_id)
 
     def test_load_categories_with_posts(self):
         """

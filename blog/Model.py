@@ -140,6 +140,7 @@ class Post(Base):
     comment_status_id = Column('comment_status_id', Integer, ForeignKey('comment_status.id'))
     comment_status = relationship('CommentStatus', foreign_keys='Post.comment_status_id')
     comment_count = Column('comment_count', Integer, default=0)
+    comments = []
 
     def __repr__(self):
         return "<Post(id=%s,author_id=%s,date=%s,modified=%s,title=%s,len(content)=%s,category=%s," \
