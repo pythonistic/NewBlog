@@ -157,6 +157,10 @@ class QueryTest(unittest.TestCase):
         Get the registered categories for the blog (only where posts are present in the category).
         :return:
         """
+        categories = self.queries.get_categories_with_posts()
+        self.assertIsNotNone(categories)
+        self.assertEqual(1, len(categories))
+        self.assertEqual('General', categories[0].name)
 
     def test_load_post_summaries_for_approval(self):
         """

@@ -1,4 +1,4 @@
-from blog.Model import Post, PostSynopsis, Comment
+from blog.Model import Post, PostSynopsis, Comment, Category, Approval
 
 
 class Query(object):
@@ -89,6 +89,18 @@ class Query(object):
         """
         post_id = None
         post_synopses = self.session.query(PostSynopsis).filter(PostSynopsis.permalink == permalink).all()
-        if (len(post_synopses) > 0):
+        if len(post_synopses) > 0:
             post_id = post_synopses[0].id
         return post_id
+
+    def get_categories_with_posts(self):
+        """
+        Get the visible categories with active posts.
+
+        :return: the list of active categories with posts, or an empty list if none.
+        """
+        categories = self.session.query(Category).join(PostSynopsis).join(Approval)\
+            .filter(Category.visible == True)\
+            .filter(Approval.status == 'approved')\
+            .all()
+        return categories
