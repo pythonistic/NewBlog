@@ -56,7 +56,7 @@ class QueryTest(unittest.TestCase):
         post = self.queries.load_post_with_comments_by_id(-101)
         self.assertIsNotNone(post)
         self.assertEqual(post.title, 'Test Post')
-        self.assertEqual(post.comment_count, 3)
+        self.assertEqual(post.comment_count, 4)
         self.assertEqual(post.comment_count, len(post.comments))
         self.assertEqual(post, post.comments[0].post)
 
@@ -76,7 +76,7 @@ class QueryTest(unittest.TestCase):
         post = self.queries.load_post_with_comments_by_permalink('http://post1')
         self.assertIsNotNone(post)
         self.assertEqual(post.title, 'Test Post')
-        self.assertEqual(post.comment_count, 3)
+        self.assertEqual(post.comment_count, 4)
         self.assertEqual(post.comment_count, len(post.comments))
         self.assertEqual(post, post.comments[0].post)
 
@@ -113,7 +113,7 @@ class QueryTest(unittest.TestCase):
         post = self.queries.load_post_by_id('-101')
         self.assertIsNotNone(post)
         self.assertEqual(post.title, 'Test Post')
-        self.assertEqual(post.comment_count, 3)
+        self.assertEqual(post.comment_count, 4)
         self.assertEqual(0, len(post.comments))
 
     def test_load_comments(self):
@@ -124,7 +124,7 @@ class QueryTest(unittest.TestCase):
         comments = self.queries.load_comments_by_post_id('-101')
         self.assertIsNotNone(comments)
         self.assertTrue(comments)
-        self.assertEqual(3, len(comments))
+        self.assertEqual(4, len(comments))
 
     def test_load_comments_failed(self):
         """
@@ -188,6 +188,14 @@ class QueryTest(unittest.TestCase):
         Load a single comment with children.
         :return:
         """
+        comment = self.queries.load_comment_by_id(-101)
+        self.assertIsNotNone(comment)
+        self.assertEqual(-101, comment.id)
+        self.assertEqual(-101, comment.post.id)
+        self.assertIsNone(comment.parent_id)
+        self.assertIsNotNone(comment.children)
+        self.assertEqual(1, len(comment.children))
+        self.assertEqual(-105, comment.children[0].id)
 
     def test_load_authors(self):
         """

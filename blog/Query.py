@@ -126,3 +126,15 @@ class Query(object):
             .filter(Approval.status == 'pending')\
             .all()
         return comments
+
+    def load_comment_by_id(self, id):
+        """
+        Load a comment and its children.
+
+        :return: the comment and its children or None if not found.
+        """
+        comment = None
+        comments = self.session.query(Comment).filter(Comment.id == id).all()
+        if len(comments) > 0:
+            comment = comments[0]
+        return comment

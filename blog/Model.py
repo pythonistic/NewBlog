@@ -72,6 +72,7 @@ class Comment(Base):
     id = Column('id', Integer, primary_key=True)
     parent_id = Column('parent_id', Integer, ForeignKey('comment.id'))
     parent = relationship('Comment', uselist=False, foreign_keys='Comment.parent_id')
+    children = relationship('Comment')
     post_id = Column('post_id', Integer, ForeignKey('post.id'))
     post = relationship('Post', foreign_keys='Comment.post_id')
     author_name = Column('author', String(255))
