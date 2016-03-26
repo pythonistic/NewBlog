@@ -21,3 +21,4 @@ insert into post values (-106, -101, now(), now(), 'Test Post 6', 'This is my si
 insert into comment values (-101, null, -101, 'No One', 'noone@null', '', '::1', null, now(), 'Test comment from a guest', (select id from approval where status = 'approved'), 'Mozilla', 'text/plain');
 insert into comment values (-102, null, -101, 'Unit Test 1', 'unittest1@null', 'https://null', '::1', -101, now(), 'Test comment from a registered author', (select id from approval where status = 'approved'), 'Mozilla', 'text/plain');
 insert into comment values (-103, null, -101, 'No One', 'noone@null', '', '::1', null, now(), 'Rejected comment from a guest', (select id from approval where status = 'rejected'), 'Mozilla', 'text/plain');
+insert into comment values (-104, null, -102, 'No One Also', 'noone@null', '', '::1', null, now(), 'Pending comment from a guest', (select id from approval where status = 'pending'), 'Mozilla', 'text/plain');

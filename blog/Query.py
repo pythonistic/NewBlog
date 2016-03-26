@@ -115,3 +115,14 @@ class Query(object):
             .filter(Approval.status == 'pending')\
             .all()
         return synopsis
+
+    def load_comments_for_approval(self):
+        """
+        Load comments pending approval.
+
+        :return: the list of comments pending approval.
+        """
+        comments = self.session.query(Comment).join(Approval)\
+            .filter(Approval.status == 'pending')\
+            .all()
+        return comments

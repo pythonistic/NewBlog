@@ -170,13 +170,18 @@ class QueryTest(unittest.TestCase):
         summaries = self.queries.load_post_synopsis_for_approval()
         self.assertIsNotNone(summaries)
         self.assertEqual(1, len(summaries))
-        self.assertEqual(-106,summaries[0].id)
+        self.assertEqual(-106, summaries[0].id)
 
     def test_load_comment_summaries_for_approval(self):
         """
         Load the comment summaries for approval.
         :return:
         """
+        summaries = self.queries.load_comments_for_approval()
+        self.assertIsNotNone(summaries)
+        self.assertEqual(1, len(summaries))
+        self.assertEqual(-104, summaries[0].id)
+        self.assertEqual(-102, summaries[0].post_id)
 
     def test_load_comment(self):
         """
