@@ -162,11 +162,15 @@ class QueryTest(unittest.TestCase):
         self.assertEqual(1, len(categories))
         self.assertEqual('General', categories[0].name)
 
-    def test_load_post_summaries_for_approval(self):
+    def test_load_post_synopsis_for_approval(self):
         """
         Load the post summaries for approval.
         :return:
         """
+        summaries = self.queries.load_post_synopsis_for_approval()
+        self.assertIsNotNone(summaries)
+        self.assertEqual(1, len(summaries))
+        self.assertEqual(-106,summaries[0].id)
 
     def test_load_comment_summaries_for_approval(self):
         """

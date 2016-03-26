@@ -104,3 +104,14 @@ class Query(object):
             .filter(Approval.status == 'approved')\
             .all()
         return categories
+
+    def load_post_synopsis_for_approval(self):
+        """
+        Get synopses for the posts in pending status.
+
+        :return: the list of post summaries in pending status.
+        """
+        synopsis = self.session.query(PostSynopsis).join(Approval)\
+            .filter(Approval.status == 'pending')\
+            .all()
+        return synopsis
