@@ -93,6 +93,15 @@ class Query(object):
             post_id = post_synopses[0].id
         return post_id
 
+    def get_categories(self):
+        """
+        Get the list of all categories.
+
+        :return: the list of all categories.
+        """
+        categories = self.session.query(Category).all()
+        return categories
+
     def get_categories_with_posts(self):
         """
         Get the visible categories with active posts.

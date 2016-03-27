@@ -238,6 +238,9 @@ class QueryTest(unittest.TestCase):
         Load the list of categories.
         :return:
         """
+        categories = self.queries.get_categories()
+        self.assertIsNotNone(categories)
+        self.assertEqual(4, len(categories))
 
     def test_load_comment_status(self):
         """
