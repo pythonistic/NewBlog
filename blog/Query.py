@@ -1,4 +1,4 @@
-from blog.Model import Post, PostSynopsis, Comment, Category
+from blog.Model import Post, PostSynopsis, Comment, CommentStatus, Category
 from blog.Model import Approval, Author, AuthorStatus
 
 
@@ -148,6 +148,15 @@ class Query(object):
         if len(comments) > 0:
             comment = comments[0]
         return comment
+
+    def get_comment_statuses(self):
+        """
+        Get the list of all comment statuses.
+
+        :return: the comment statuses.
+        """
+        comment_statuses = self.session.query(CommentStatus).all()
+        return comment_statuses
 
     def load_authors(self):
         """

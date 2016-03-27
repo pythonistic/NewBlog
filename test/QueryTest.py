@@ -247,6 +247,9 @@ class QueryTest(unittest.TestCase):
         Load the list of comment statuses.
         :return:
         """
+        statuses = self.queries.get_comment_statuses()
+        self.assertIsNotNone(statuses)
+        self.assertEqual(3, len(statuses))
 
     def test_load_comments_by_status(self):
         """
