@@ -172,3 +172,12 @@ class Query(object):
         """
         approval_statuses = self.session.query(Approval).all()
         return approval_statuses
+
+    def load_author_statuses(self):
+        """
+        Load the list of author statuses.
+
+        :return: the list of author statuses.
+        """
+        author_statuses = self.session.query(AuthorStatus).all()
+        return author_statuses

@@ -229,6 +229,9 @@ class QueryTest(unittest.TestCase):
         Load the list of author statuses.
         :return:
         """
+        author_statuses = self.queries.load_author_statuses()
+        self.assertIsNotNone(author_statuses)
+        self.assertEqual(3, len(author_statuses))
 
     def test_load_category(self):
         """
