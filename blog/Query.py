@@ -1,8 +1,8 @@
-from blog.Model import Post, PostSynopsis, Comment, Category, Approval, Author, AuthorStatus
+from blog.Model import Post, PostSynopsis, Comment, Category
+from blog.Model import Approval, Author, AuthorStatus
 
 
 class Query(object):
-
     def __init__(self, session):
         self.session = session
 
@@ -99,9 +99,9 @@ class Query(object):
 
         :return: the list of active categories with posts, or an empty list if none.
         """
-        categories = self.session.query(Category).join(PostSynopsis).join(Approval)\
-            .filter(Category.visible == True)\
-            .filter(Approval.status == 'approved')\
+        categories = self.session.query(Category).join(PostSynopsis).join(Approval) \
+            .filter(Category.visible == True) \
+            .filter(Approval.status == 'approved') \
             .all()
         return categories
 
@@ -111,8 +111,8 @@ class Query(object):
 
         :return: the list of post summaries in pending status.
         """
-        synopsis = self.session.query(PostSynopsis).join(Approval)\
-            .filter(Approval.status == 'pending')\
+        synopsis = self.session.query(PostSynopsis).join(Approval) \
+            .filter(Approval.status == 'pending') \
             .all()
         return synopsis
 
@@ -122,8 +122,8 @@ class Query(object):
 
         :return: the list of comments pending approval.
         """
-        comments = self.session.query(Comment).join(Approval)\
-            .filter(Approval.status == 'pending')\
+        comments = self.session.query(Comment).join(Approval) \
+            .filter(Approval.status == 'pending') \
             .all()
         return comments
 
@@ -146,9 +146,9 @@ class Query(object):
 
         :return: the list of active authors or [] if none.
         """
-        authors = self.session.query(Author).join(AuthorStatus)\
-            .filter(Author.status_id == AuthorStatus.id)\
-            .filter(AuthorStatus.status == 'active')\
+        authors = self.session.query(Author).join(AuthorStatus) \
+            .filter(Author.status_id == AuthorStatus.id) \
+            .filter(AuthorStatus.status == 'active') \
             .all()
         return authors
 
@@ -158,8 +158,17 @@ class Query(object):
 
         :return: the list of pending authors or [] if none.
         """
-        authors = self.session.query(Author).join(AuthorStatus)\
-            .filter(Author.status_id == AuthorStatus.id)\
-            .filter(AuthorStatus.status == 'pending')\
+        authors = self.session.query(Author).join(AuthorStatus) \
+            .filter(Author.status_id == AuthorStatus.id) \
+            .filter(AuthorStatus.status == 'pending') \
             .all()
         return authors
+
+    def load_approval_statuses(self):
+        """
+        Load the list of approval statuses.
+
+        :return: the list of approval statuses.
+        """
+        approval_statuses = self.session.query(Approval).all()
+        return approval_statuses

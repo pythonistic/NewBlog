@@ -220,6 +220,9 @@ class QueryTest(unittest.TestCase):
         Load the list of approval statuses.
         :return:
         """
+        approval_statuses = self.queries.load_approval_statuses()
+        self.assertIsNotNone(approval_statuses)
+        self.assertEqual(3, len(approval_statuses))
 
     def test_load_author_status(self):
         """
