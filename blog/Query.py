@@ -1,4 +1,4 @@
-from blog.Model import Post, PostSynopsis, Comment, Category, Approval
+from blog.Model import Post, PostSynopsis, Comment, Category, Approval, Author, AuthorStatus
 
 
 class Query(object):
@@ -131,6 +131,7 @@ class Query(object):
         """
         Load a comment and its children.
 
+        :param id: the comment ID.
         :return: the comment and its children or None if not found.
         """
         comment = None
@@ -138,3 +139,15 @@ class Query(object):
         if len(comments) > 0:
             comment = comments[0]
         return comment
+
+    def load_authors(self):
+        """
+        Load all the active authors.
+
+        :return: the list of active authors or [] if None.
+        """
+        authors = self.session.query(Author).join(AuthorStatus)\
+            .filter(Author.status_id == AuthorStatus.id)\
+            .filter(AuthorStatus.status == 'active')\
+            .all()
+        return authors

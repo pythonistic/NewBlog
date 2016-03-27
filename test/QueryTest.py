@@ -202,6 +202,15 @@ class QueryTest(unittest.TestCase):
         Load the list of authors.
         :return:
         """
+        authors = self.queries.load_authors()
+        self.assertIsNotNone(authors)
+        self.assertEqual(1, len(authors))
+
+    def test_load_pending_authors(self):
+        """
+        Load the list of authors pending approval.
+        :return:
+        """
 
     def test_load_approval(self):
         """
