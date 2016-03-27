@@ -199,3 +199,14 @@ class Query(object):
         """
         author_statuses = self.session.query(AuthorStatus).all()
         return author_statuses
+
+    def load_comments_by_approval_status_id(self, id):
+        """
+        Load the list of comments by status ID, such as to identify comments
+        that need to be approved.
+
+        :param id: the approval status ID.
+        :return: the list of comments matching that status ID.
+        """
+        comments = self.session.query(Comment).filter(Comment.approval_id == id).all()
+        return comments

@@ -251,11 +251,14 @@ class QueryTest(unittest.TestCase):
         self.assertIsNotNone(statuses)
         self.assertEqual(3, len(statuses))
 
-    def test_load_comments_by_status(self):
+    def test_load_comments_by_approval_status(self):
         """
-        Load the comments by a status.
+        Load the comments by approval status.
         :return:
         """
+        comments = self.queries.load_comments_by_approval_status_id(1)
+        self.assertIsNotNone(1)
+        self.assertEqual(1, len(comments))
 
     def test_load_posts_by_status(self):
         """
