@@ -210,3 +210,13 @@ class Query(object):
         """
         comments = self.session.query(Comment).filter(Comment.approval_id == id).all()
         return comments
+
+    def load_posts_by_approval_status_id(self, id):
+        """
+        Load the list of posts by approval status ID.
+
+        :param id: the approval status ID.
+        :return: the list of poss matching the status ID.
+        """
+        posts = self.session.query(Post).filter(Post.approval_id == id).all()
+        return posts

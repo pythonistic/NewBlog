@@ -257,7 +257,7 @@ class QueryTest(unittest.TestCase):
         :return:
         """
         comments = self.queries.load_comments_by_approval_status_id(1)
-        self.assertIsNotNone(1)
+        self.assertIsNotNone(comments)
         self.assertEqual(1, len(comments))
 
     def test_load_posts_by_status(self):
@@ -265,6 +265,9 @@ class QueryTest(unittest.TestCase):
         Load the posts by a status.
         :return:
         """
+        posts = self.queries.load_posts_by_approval_status_id(1)
+        self.assertIsNotNone(posts)
+        self.assertEqual(1, len(posts))
 
     def test_load_post_status(self):
         """
