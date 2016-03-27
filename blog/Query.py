@@ -144,10 +144,22 @@ class Query(object):
         """
         Load all the active authors.
 
-        :return: the list of active authors or [] if None.
+        :return: the list of active authors or [] if none.
         """
         authors = self.session.query(Author).join(AuthorStatus)\
             .filter(Author.status_id == AuthorStatus.id)\
             .filter(AuthorStatus.status == 'active')\
+            .all()
+        return authors
+
+    def load_pending_authors(self):
+        """
+        Load the authors pending approval.
+
+        :return: the list of pending authors or [] if none.
+        """
+        authors = self.session.query(Author).join(AuthorStatus)\
+            .filter(Author.status_id == AuthorStatus.id)\
+            .filter(AuthorStatus.status == 'pending')\
             .all()
         return authors
