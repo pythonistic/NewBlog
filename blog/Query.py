@@ -1,5 +1,7 @@
-from blog.Model import Post, PostSynopsis, Comment, CommentStatus, Category
+from blog.Model import Post, PostStatus, PostSynopsis, PostType
+from blog.Model import Comment, CommentStatus, Category
 from blog.Model import Approval, Author, AuthorStatus
+from blog.Model import TrackbackStatus
 
 
 class Query(object):
@@ -220,3 +222,39 @@ class Query(object):
         """
         posts = self.session.query(Post).filter(Post.approval_id == id).all()
         return posts
+
+    def get_post_statuses(self):
+        """
+        Load the list of post statuses.
+
+        :return: the list of PostStatus.
+        """
+        statuses = self.session.query(PostStatus).all()
+        return statuses
+
+    def get_post_types(self):
+        """
+        Load the list of post types.
+
+        :return: the list of PostType.
+        """
+        types = self.session.query(PostType).all()
+        return types
+
+    def load_posts_by_type_id(self, id):
+        """
+        Load the posts by type ID.
+
+        :return: the list of Post by PostType.id.
+        """
+        posts = self.session.query(Post).filter(Post.post_type_id == id).all()
+        return posts
+
+    def get_trackback_statuses(self):
+        """
+        Load the list of trackback statuses.
+
+        :return the list of TrackBackStatus.
+        """
+        statuses = self.session.query(TrackbackStatus).all()
+        return statuses

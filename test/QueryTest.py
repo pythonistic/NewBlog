@@ -274,22 +274,34 @@ class QueryTest(unittest.TestCase):
         Load the list of post statuses.
         :return:
         """
+        statuses = self.queries.get_post_statuses()
+        self.assertIsNotNone(statuses)
+        self.assertEqual(5, len(statuses))
 
     def test_load_post_type(self):
         """
         Load the list of post types.
         :return:
         """
+        types = self.queries.get_post_types()
+        self.assertIsNotNone(types)
+        self.assertEqual(3, len(types))
 
     def test_load_posts_by_type(self):
         """
         Load the posts by post type.
         :return:
         """
+        posts = self.queries.load_posts_by_type_id(3)
+        self.assertIsNotNone(posts)
+        self.assertEqual(1, len(posts))
 
     def test_load_trackback_status(self):
         """
         Load the list of trackback statuses.
         :return:
         """
+        statuses = self.queries.get_trackback_statuses()
+        self.assertIsNotNone(statuses)
+        self.assertEqual(3, len(statuses))
 
