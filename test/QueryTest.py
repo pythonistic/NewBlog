@@ -220,7 +220,7 @@ class QueryTest(unittest.TestCase):
         Load the list of approval statuses.
         :return:
         """
-        approval_statuses = self.queries.load_approval_statuses()
+        approval_statuses = self.queries.get_approval_statuses()
         self.assertIsNotNone(approval_statuses)
         self.assertEqual(3, len(approval_statuses))
 
@@ -229,7 +229,7 @@ class QueryTest(unittest.TestCase):
         Load the list of author statuses.
         :return:
         """
-        author_statuses = self.queries.load_author_statuses()
+        author_statuses = self.queries.get_author_statuses()
         self.assertIsNotNone(author_statuses)
         self.assertEqual(3, len(author_statuses))
 
@@ -305,3 +305,13 @@ class QueryTest(unittest.TestCase):
         self.assertIsNotNone(statuses)
         self.assertEqual(3, len(statuses))
 
+    def test_singleton_as_attributes(self):
+        # get the master instances of different statuses
+        post_statuses = self.queries.get_post_statuses()
+        for post_status in post_statuses:
+            setattr(PostStatus, post_status.status, post_status)
+        self.assertEqual(1, PostStatus.publish.id)
+        self.assertEqual(2, PostStatus.future.id)
+        self.assertEqual(3, PostStatus.draft.id)
+        self.assertEqual(4, PostStatus.pending.id)
+        self.assertEqual(5, PostStatus.delete.id)

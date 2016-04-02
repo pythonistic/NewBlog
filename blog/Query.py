@@ -184,7 +184,7 @@ class Query(object):
             .all()
         return authors
 
-    def load_approval_statuses(self):
+    def get_approval_statuses(self):
         """
         Load the list of approval statuses.
 
@@ -193,7 +193,7 @@ class Query(object):
         approval_statuses = self.session.query(Approval).all()
         return approval_statuses
 
-    def load_author_statuses(self):
+    def get_author_statuses(self):
         """
         Load the list of author statuses.
 
