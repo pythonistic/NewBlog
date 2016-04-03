@@ -51,7 +51,7 @@ def load_categories():
 
 @app.route('/')
 def index():
-    return render_template('main.html')
+    return render_template('main.html', posts=get_posts())
 
 
 def get_posts():
