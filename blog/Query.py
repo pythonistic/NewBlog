@@ -1,7 +1,7 @@
-from blog.Model import Post, PostStatus, PostSynopsis, PostType
-from blog.Model import Comment, CommentStatus, Category
-from blog.Model import Approval, Author, AuthorStatus
-from blog.Model import TrackbackStatus
+from blog.model import Post, PostStatus, PostSynopsis, PostType
+from blog.model import Comment, CommentStatus, Category
+from blog.model import Approval, Author, AuthorStatus
+from blog.model import TrackbackStatus
 
 
 class Query(object):
@@ -202,6 +202,14 @@ class Query(object):
         author_statuses = self.session.query(AuthorStatus).all()
         return author_statuses
 
+    def load_comments_by_approval_status(self, status):
+        """
+        Load comments by an approval status.
+
+        :return: the list of comments matching that status.
+        """
+        return self.load_comments_by_approval_status_id(status.id)
+
     def load_comments_by_approval_status_id(self, id):
         """
         Load the list of comments by status ID, such as to identify comments
@@ -212,6 +220,14 @@ class Query(object):
         """
         comments = self.session.query(Comment).filter(Comment.approval_id == id).all()
         return comments
+
+    def load_posts_by_approval_status(self, status):
+        """
+        Load the posts by approval status.
+
+        :return: the list of posts matching that approval status.
+        """
+        return self.load_posts_by_approval_status_id(status.id)
 
     def load_posts_by_approval_status_id(self, id):
         """
@@ -240,6 +256,14 @@ class Query(object):
         """
         types = self.session.query(PostType).all()
         return types
+
+    def load_posts_by_type(self, type):
+        """
+        Load the posts by type.
+
+        :return: the list of posts matching the type ID.
+        """
+        return self.load_posts_by_type_id(type.id)
 
     def load_posts_by_type_id(self, id):
         """

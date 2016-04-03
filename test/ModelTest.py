@@ -1,7 +1,7 @@
 import unittest
 
 from blog import Session
-from blog.Model import *
+from blog.model import *
 
 
 class ModelTest(unittest.TestCase):

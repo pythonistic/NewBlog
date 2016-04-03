@@ -1,7 +1,7 @@
 import unittest
 
 from blog import NewBlog, Session, db_engine
-from blog.Model import Category, PostStatus, Approval, Author, AuthorStatus, CommentStatus, PostType, TrackbackStatus
+from blog.model import Category, PostStatus, Approval, Author, AuthorStatus, CommentStatus, PostType, TrackbackStatus
 from blog.Query import Query
 
 
@@ -62,3 +62,9 @@ class NewBlogTest(unittest.TestCase):
     def test_load_categories(self):
         NewBlog.load_categories()
         self.assertIsNotNone(Category.General)
+
+    def test_get_posts(self):
+        NewBlog.load_status_singletons()
+        posts = NewBlog.get_posts()
+        self.assertIsNotNone(posts)
+        self.assertEqual(1, len(posts))

@@ -1,4 +1,4 @@
-from blog import Base
+from blog.model import Base
 from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, func, Integer, String
 from sqlalchemy.orm import relationship
 

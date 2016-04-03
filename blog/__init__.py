@@ -1,14 +1,10 @@
 from __future__ import print_function
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 import ConfigParser
 import os
 import sqlalchemy.pool
 import sys
-
-# required for Models
-Base = declarative_base()
 
 # environment variable pointing to the DB properties file
 db_props_file = './db.properties'

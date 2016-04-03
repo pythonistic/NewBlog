@@ -256,11 +256,37 @@ class QueryTest(unittest.TestCase):
         Load the comments by approval status.
         :return:
         """
+        statuses = self.queries.get_approval_statuses()
+        for status in statuses:
+            if status.id == 1:
+                break
+        comments = self.queries.load_comments_by_approval_status(status)
+        self.assertIsNotNone(comments)
+        self.assertEqual(1, len(comments))
+
+    def test_load_comments_by_approval_status_id(self):
+        """
+        Load the comments by approval status.
+        :return:
+        """
         comments = self.queries.load_comments_by_approval_status_id(1)
         self.assertIsNotNone(comments)
         self.assertEqual(1, len(comments))
 
     def test_load_posts_by_status(self):
+        """
+        Load the posts by a status.
+        :return:
+        """
+        statuses = self.queries.get_approval_statuses()
+        for status in statuses:
+            if status.id == 1:
+                break
+        posts = self.queries.load_posts_by_approval_status(status)
+        self.assertIsNotNone(posts)
+        self.assertEqual(1, len(posts))
+
+    def test_load_posts_by_status_id(self):
         """
         Load the posts by a status.
         :return:
@@ -288,6 +314,19 @@ class QueryTest(unittest.TestCase):
         self.assertEqual(3, len(types))
 
     def test_load_posts_by_type(self):
+        """
+        Load the posts by post type.
+        :return:
+        """
+        post_types = self.queries.get_post_types()
+        for type in post_types:
+            if type.id == 3:
+                break
+        posts = self.queries.load_posts_by_type(type)
+        self.assertIsNotNone(posts)
+        self.assertEqual(1, len(posts))
+
+    def test_load_posts_by_type_id(self):
         """
         Load the posts by post type.
         :return:

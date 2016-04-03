@@ -1,8 +1,8 @@
-from flask import Flask
-from flask import render_template
 from blog import Session
+from blog.model import Category, PostStatus, Approval, Author, AuthorStatus, CommentStatus, PostType, TrackbackStatus
 from Query import Query
-from Model import Category, PostStatus, Approval, Author, AuthorStatus, CommentStatus, PostType, TrackbackStatus
+
+from flask import Flask, render_template
 
 app = Flask(__name__)
 app.debug = True
@@ -50,18 +50,14 @@ def load_categories():
 
 
 @app.route('/')
-def hello_world():
+def index():
     return render_template('main.html')
 
 
 def get_posts():
-    query = Query(Session)
-    # TODO load this on startup and write through in the future
-    statuses = query.get_post_statuses()
-    for status in statuses:
-        # add the statuses to the PostStatus object so you can get an instance of the post status object by attribute on the class
-        pass
-    posts = query.load_posts_by_approval_status_id(PostStatus.Approved.id)
+    session = Session()
+    query = Query(session)
+    posts = query.load_posts_by_approval_status(PostStatus.publish)
     # TODO consider passing a PostStatus object instead of an id - it seems more natural, right?
     return posts
 
