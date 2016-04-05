@@ -261,6 +261,7 @@ class Query(object):
         """
         Load the posts by type.
 
+        :param type: the PostType instance.
         :return: the list of posts matching the type ID.
         """
         return self.load_posts_by_type_id(type.id)
@@ -269,6 +270,7 @@ class Query(object):
         """
         Load the posts by type ID.
 
+        :param id: the PostType ID.
         :return: the list of Post by PostType.id.
         """
         posts = self.session.query(Post).filter(Post.post_type_id == id).all()
@@ -278,7 +280,25 @@ class Query(object):
         """
         Load the list of trackback statuses.
 
-        :return the list of TrackBackStatus.
+        :return: the list of TrackBackStatus.
         """
         statuses = self.session.query(TrackbackStatus).all()
         return statuses
+
+    def load_paginated_post_synopses(self, start_id, page_size, post_type):
+        """
+        Load the post synopses paginated, with a starting ID, page size, and post type.
+
+        :param start_id: the starting ID.
+        :param page_size: the number of posts to return.
+        :param post_type: the type of posts to return
+        """
+        if start_id is None:
+            start_id = 1
+        synopses = self.session.query(PostSynopsis).filter(PostSynopsis.id >= start_id).\
+            filter(PostSynopsis.post_type_id == post_type.id).\
+            yield_per(page_size).\
+            enable_eagerloads(False).\
+            limit(page_size).\
+            all()
+        return synopses

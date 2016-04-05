@@ -354,3 +354,22 @@ class QueryTest(unittest.TestCase):
         self.assertEqual(3, PostStatus.draft.id)
         self.assertEqual(4, PostStatus.pending.id)
         self.assertEqual(5, PostStatus.delete.id)
+
+    def test_paginate_post_synopses(self):
+        """
+        Load the post synposes as a paginated list.
+        """
+        post_type = self.queries.get_post_types()[0]
+        synopses = self.queries.load_paginated_post_synopses(-105, 1, post_type)
+        self.assertIsNotNone(synopses)
+        self.assertEqual(1, len(synopses))
+        self.assertEqual(-103, synopses[0].id)
+
+    def test_paginate_post_synopses_no_id(self):
+        """
+        Load the post synposes as a paginated list with no starting ID.
+        """
+        post_type = self.queries.get_post_types()[0]
+        synopses = self.queries.load_paginated_post_synopses(None, 1, post_type)
+        self.assertIsNotNone(synopses)
+        self.assertEqual(0, len(synopses))
